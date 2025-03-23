@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <%- include('../partials/header'); -%>
+        <div class="container">
+            <form action="/projects/<%=project.id%>?_method=PUT" method="post">
+                <h1 class="heading">Editing a Project</h1>
+                <div class="formcontainer">
+                    <hr/>
+                    <label for="title">Title:</label>
+                    <input id="title" class="boxSize" type="text" name="project[title]" value="<%=project.title%>" required>
+                    
+                    <label>Project Members (Roll Numbers):</label>
+                    <% for(let i = 0; i < 4; i++) { %>
+                        <input type="text" 
+                               name="project[author][0][username][<%=i%>]" 
+                               value="<%=project.author[0].username[i] || ''%>" 
+                               placeholder="Member <%=i+1%> Roll No">
+                    <% } %>
+
+                    <label for="supervisor">Supervisor:</label>
+                    <input id="supervisor" class="boxSize" type="text" name="project[supervisor]" value="<%=project.supervisor%>" required>
+                    
+                    <label for="year">Year:</label>
+                    <input id="year" class="boxSize" type="number" name="project[year]" value="<%=project.year%>" min="1900" max="2030" required>
+                    
+                    <label for="link">Project Link:</label>
+                    <input id="link" class="boxSize" type="text" name="project[link]" value="<%=project.link%>" required>
+                    
+                    <label for="abstract">Abstract:</label>
+                    <textarea id="abstract" class="boxSize" name="project[abstract]" required><%=project.abstract%></textarea>
+                    
+                    <button class="formbutton">Update</button>
+                </div>
+            </form>
+            <div class="cancel">
+                <a href="/projects/<%=project.id%>"><button>Cancel</button></a>
+            </div>
+        </div>
+        <style>
+            .formcontainer {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .boxSize {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            label {
+                display: block;
+                margin-top: 1rem;
+                color: #ffffff;
+            }
+            textarea {
+                min-height: 100px;
+            }
+            .formbutton {
+                margin-top: 2rem;
+                width: 100%;
+            }
+        </style>
+    </body>
+</html>

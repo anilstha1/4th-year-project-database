@@ -1,0 +1,235 @@
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+/>
+
+<script
+  src="https://kit.fontawesome.com/1bcd2404f3.js"
+  crossorigin="anonymous"
+></script>
+<br />
+<nav class="container">
+  <ul>
+    <li class="title">
+      <a href="/projects"><strong>Final Year Major Project Database</strong></a>
+    </li>
+  </ul>
+  <ul>
+    <!-- <li><a href="#">Other link</a></li>
+        <li><a href="#">Link</a></li> -->
+
+    <% if(!currentUser){%>
+    <li><Button onclick="openAboutModal()">Log in</Button></li>
+    <!-- <li><Button onclick="registerModal()">Register</Button></li></li> -->
+    <% }else{%>
+    <li>Signed In as: <%= currentUser.user%></li>
+    <li></li>
+    <li>
+      <a
+        href="/logout"
+        role="button"
+        >Log out</a
+      >
+    </li>
+    <%}%>
+  </ul>
+</nav>
+
+<div class="container">
+  <%if(error && error.length > 0){%>
+  <div
+    class="alert alert-danger"
+    role="alert"
+  >
+    <%=error %><span
+      class="closebtn"
+      onclick="this.parentElement.style.display='none';"
+      >&times;</span
+    >
+  </div>
+  <% } %> <% if(success && success.length > 0){ %>
+  <div
+    class="alert alert-success"
+    role="alert"
+  >
+    <%=success%><span
+      class="closebtn"
+      onclick="this.parentElement.style.display='none';"
+      >&times;</span
+    >
+  </div>
+  <% } %>
+</div>
+
+<!-- Login Modal -->
+<dialog id="about-modal">
+  <article>
+    <header>
+      <a
+        href="/projects"
+        aria-label="Close"
+        class="close"
+        onclick="closeAboutModal()"
+      ></a>
+      Log In
+    </header>
+
+    <form
+      action="/login"
+      method="post"
+    >
+      <div class="formcontainer">
+        <input
+          type="text"
+          name="username"
+          placeholder="Login ID"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <Button
+          type="submit"
+          value="login"
+          action="/login"
+          method="post"
+          >Login</Button
+        >
+      </div>
+      <hr />
+      <div>
+        <p>Demo Account</p>
+        <p>Username: admin</p>
+        <p>Password: admin123</p>
+      </div>
+    </form>
+
+    <div class="grid">
+      <div></div>
+      <a onclick="registerModal()">Change password?</a>
+      <div></div>
+    </div>
+  </article>
+</dialog>
+
+<!-- Change Password  Modal -->
+<dialog id="about-rmodal">
+  <article>
+    <header>
+      <a
+        href="/projects"
+        aria-label="Close"
+        class="close"
+        onclick="closeRModal()"
+      ></a>
+      Change password
+    </header>
+
+    <form
+      action="/changepassword?_method=PUT"
+      method="post"
+    >
+      <div class="formcontainer">
+        <input
+          type="text"
+          name="username"
+          placeholder="Login ID"
+          required
+        />
+        <input
+          type="password"
+          name="oldpassword"
+          placeholder="Old Password"
+          required
+        />
+        <input
+          type="password"
+          name="newpassword"
+          placeholder="New Password"
+          required
+        />
+        <Button
+          type="submit"
+          value="changepassword"
+          action="/changepassword?_method=PUT"
+          method="post"
+          >Change Password</Button
+        >
+      </div>
+      <hr />
+    </form>
+  </article>
+</dialog>
+
+<script>
+  let modal = document.querySelector("#about-modal");
+  let rmodal = document.querySelector("#about-rmodal");
+  let isModalOpen = false;
+  let isRModalOpen = false;
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key, isModalOpen);
+    if (e.key == "Escape" && isModalOpen) closeAboutModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key, isRModalOpen);
+    if (e.key == "Escape" && isRModalOpen) closeRModal();
+  });
+  function closeAboutModal() {
+    isModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    // setTimeout(() => {
+    //   modal.removeAttribute("open");
+    //   document.querySelector("html").classList.remove("modal-is-closing");
+    // }, 400);
+  }
+  function openAboutModal() {
+    console.log(`opening`);
+    isModalOpen = true;
+    document.querySelector("html").classList.add("modal-is-open");
+    modal.setAttribute("open", "true");
+  }
+
+  function closeRModel() {
+    isRModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+  }
+  function registerModal() {
+    console.log(`opening`);
+    isRModalOpen = true;
+    //closeAboutModal();
+    document.querySelector("html").classList.add("modal-is-open");
+    rmodal.setAttribute("open", "true");
+  }
+</script>
+
+<style>
+  .title {
+    font-size: 2rem;
+  }
+  .alert {
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+  }
+  .alert-danger {
+    background-color: #ee5348; /* Red */
+  }
+  .alert-success {
+    background-color: #2fb986; /* Red */
+  }
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+</style>

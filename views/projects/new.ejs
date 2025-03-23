@@ -1,0 +1,58 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+      <%- include('../partials/header'); -%> 
+      <style>
+       
+        .formbutton{
+            width: 50%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px;
+        }
+        .cancel{
+            margin-top: 20px;
+        }
+        button{
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #007bff;
+            color: white;
+        }
+      </style>
+    </head>
+    <body>
+        <div class="container">
+        <form action="/projects" method="post">
+            <h1 class="heading">Adding a Project</h1>
+            <div class="formcontainer">
+                <hr/>
+                
+                    <input class="boxSize" type="text" name="title" placeholder="Title" required>
+                    
+                    <input  type="text" name="member[]" placeholder="Member RollNo">
+                    <input  type="text" name="member[]" placeholder="Member RollNo">
+                    <input  type="text" name="member[]" placeholder="Member RollNo">
+                    <input  type="text" name="member[]" placeholder="Member RollNo">
+                    
+                    <input type="text" name="supervisor"  placeholder="Supervisor"required>
+                    <input type="number" name="year" placeholder=" Year" min="1900" max ="2030" required>
+                    <input type="text" name="link"  placeholder="Link" required>
+                    <input type="text" name="abstract" placeholder="Abstract" required>
+                    <button class="formbutton"> Submit</button>
+                </div>
+              </form>
+              <div class="cancel">
+                <a href="/projects""><button >Cancel</button></a>   
+              </div>
+        </div>
+    </body>
+    </html>
+

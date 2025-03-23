@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+        <style>
+          .card{
+            color: black;
+            background-color:white;
+            overflow: hidden;
+            border-radius: 30px;
+          }
+        </style>
+    </head>
+<body>
+    
+        <!-- <div class="navbar">
+            <div class="heading">Final Year Major Project Database</div>
+            <% if(!currentUser){%>
+            <% }else{%>
+             <div class="signedInfo"> Signed In as: <%= currentUser.username%> </div>
+            <%}%>
+        </div> -->
+        <%- include('../partials/header'); -%> 
+          <div class="container">
+            <article class="card"> 
+            <header>
+                <div><h2><%= project.title %></h2></div>
+                <div class="grid">
+                
+                  <% if(currentUser  && project.author[0].username.filter(e => (e == (currentUser.username))).length > 0 ){%>
+
+                      <a href="/projects/<%= project.id %>/edit" ><Button>Edit</Button></a> 
+                      <form action="/projects/<%= project.id %>?_method=DELETE" method="post">
+                          <Button class="deleteButton">Delete</Button>
+                      </form>
+                      <div></div>
+                    <% } %>
+                        <div class="status">
+                          <% if(project.review_status){%>
+                          <h4 style="color:green">Approved</h4>
+                          <% }else{ %>
+                          <h4 style="color: yellow;">Pending</h4>
+                          <%}%>
+                        </div>
+                    </div>
+            </header>
+            
+            <div>
+              <strong>Authors: </strong><% for(var i =0; i< project.author[0].user.length;i++){ %>
+               <li><%=project.author[0].user[i]%></li> 
+            <% } %> 
+            </div>
+              </br>
+            <div><strong>Supervisor: </strong><%= project.supervisor %></div>
+            <div><strong>Year: </strong><%= project.year %></div>
+            <div ><strong>Link:</strong> <a href=<%- project.link -%> style="color:black;text-decoration-color: black;"><%= project.link%></div></a>
+            <div><strong>Abstract: </strong>
+                <div>
+                  <%= project.abstract %>
+                </div>
+            </div>  
+            </article>
+          </div>
+        
+</body>
+</html> <br/><br/>
+
